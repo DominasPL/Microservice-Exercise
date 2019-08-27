@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -16,14 +17,14 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @GetMapping
-//    public List<UserDTO> getAllUsers() {
-//
-//
-//
-//    }
+    @GetMapping(value = "/list", produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDTO> getAllUsers() {
 
-    @PostMapping("/add")
+        return userService.findAllUsers();
+    }
+
+    @PostMapping(value = "/add", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public UserDTO addUser(@Valid @RequestBody UserDTO userDTO) {
 

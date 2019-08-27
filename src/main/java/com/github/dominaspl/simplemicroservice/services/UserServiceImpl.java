@@ -5,7 +5,8 @@ import com.github.dominaspl.simplemicroservice.dtos.UserDTO;
 import com.github.dominaspl.simplemicroservice.models.User;
 import com.github.dominaspl.simplemicroservice.repositories.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,5 +29,18 @@ public class UserServiceImpl implements UserService {
         userDTO.setId(user.getId());
 
         return userDTO;
+    }
+
+    @Override
+    public List<UserDTO> findAllUsers() {
+
+        List<User> allUsers = userRepository.findAll();
+
+        if (allUsers.isEmpty()) {
+            throw new IllegalStateException("Users not found!");
+        }
+
+        return UserConverter.ConvertToUserDTOList(allUsers);
+
     }
 }
